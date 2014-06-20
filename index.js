@@ -1,6 +1,10 @@
-
+// Import edge library.
+// All C# code will appear in /* */.
 var edge = require("edge");
 
+/**
+* Hello edge from github example.
+*/
 exports.testEdge = function(test) {
 	var helloWorld = edge.func(function(){
 	/*
@@ -10,14 +14,15 @@ exports.testEdge = function(test) {
 	*/
 	});
 
-	helloWorld("JavaScript", function(error, result){
+	helloWorld("js", function(error, result){
 		if(error) throw error;
-		console.log(result);
+		test.done();
 	});
-
-	test.done();
 };
 
+/**
+* Test reference exe and dll and invoke .net function.
+*/
 exports.testDll = function(test) {
 	var func = edge.func(function(){
 		/*
@@ -29,22 +34,20 @@ exports.testDll = function(test) {
 			using UMTNTPlugin.Models;
 
 			async (input) =>  {
-
 				var accessPath = "E:\\implements\\TNT\\edoc.mdb";
 				var connection = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + accessPath;
-
 				var setting = new AppSettings();
+
 				var db = new DB(setting);
 				db.SetConnectionString(connection);
-				var rs = db.QueryByConAndDepot(454005846, "ABX");
 
+				var rs = db.QueryByConAndDepot(454005846, "ABX");
 				return rs;
 			}
-
 		*/
 	});
 
-	func("Hi", function(err, result) {
+	func("", function(err, result) {
 		test.equal(result.Depot , "ABX");
 		test.equal(err, undefined);
 		test.done();
